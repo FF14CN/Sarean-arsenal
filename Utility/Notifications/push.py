@@ -13,6 +13,6 @@ def push(title, content):
     push_config = configparser.ConfigParser()
     push_config.read('config.ini', encoding='UTF-8')
     # 根据配置导入对应的包
-    push_module = importlib.import_module(push_config.get('Notification', 'ush-method'))
-    result = push_module.push(title, content)
+    push_module = importlib.import_module("Utility.Notifications." + push_config.get('Notification', 'push-method'))
+    result = push_module.send(title, content)
     return result
