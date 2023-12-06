@@ -11,7 +11,7 @@ def send(title: str, content: str):
     :return:  {'status': 'success'} 或 {'status': 'failed'}
     """
     config = configparser.ConfigParser()
-    config.read('config.ini',encoding='UTF-8')
+    config.read('config.ini', encoding='UTF-8')
     pushkey = config.get('Notification', 'push-key')
     url = 'https://api.day.app/' + pushkey
     headers = {
@@ -33,4 +33,4 @@ def send(title: str, content: str):
     if response.status_code == 200:
         return {'status': 'success'}
     else:
-        return {'status': 'failed'}
+        return {'status': 'failed', 'error': response.text}

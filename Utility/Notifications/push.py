@@ -4,10 +4,10 @@ import importlib
 
 def push(title, content):
     """
-    PushDeer推送
+    Push推送
     :param title: 通知标题
     :param content: 通知内容
-    :return: 推送结果，如：{'status': 'success'} 或 {'status': 'failed'}
+    :return: 推送结果，如：{'status': 'success'} 或 {'status': 'failed', 'error': 'error message'}
     """
 
     push_config = configparser.ConfigParser()
