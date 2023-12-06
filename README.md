@@ -1,10 +1,10 @@
-## FF14 AutoSignRemake
+# FF14 AutoSignRemake
 
-##### 使用说明
+## 使用说明
 
 **按需下载Releases下的文件，进入项目根目录，使用 ```pip -r requirements.txt```安装依赖库**
 
-##### 注意事项
+## 注意事项
 
 **一般情况下无需修改根目录下的设置文件 **
 
@@ -12,19 +12,17 @@
 
 **没有logs文件无异于闭眼开车**
 
-##### TodoList
+## TodoList
 
-**支持TeleBot/钉钉bot/等推送**
+- [ ] 支持TeleBot/钉钉bot/等推送  
+- [ ] 支持账号密码和一键登录
+- [ ] 支持青龙面板
 
-**支持账号密码和一键登录**
-
-**支持青龙面板**
-
-##### 感谢
+## 感谢
 
 [@renchangjiu](https://github.com/renchangjiu/FF14AutoSignIn) **提供的核心思路**
 
-##### License
+## License
 
-[With AFL - 3.0](https://github.com/AmarokIce/PineappleDelight/blob/master/LICENSE)
+[With AFL - 3.0](https://github.com/AmarokIce/PineappleDelight/blob/master/LICENSE)  
 [Pineapple LICENSE](https://github.com/AmarokIce/PineappleDelight/blob/master/LICENSE.txt) 
