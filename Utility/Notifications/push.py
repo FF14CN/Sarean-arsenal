@@ -1,6 +1,11 @@
 import configparser
 import importlib
 
+'''
+example:
+import Utility.Notifications.push as pusher
+print(pusher.push('test', 'test'))
+'''
 
 def push(title, content):
     """
