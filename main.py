@@ -1,11 +1,13 @@
 import Daoyu
+from apscheduler.schedulers.blocking import BlockingScheduler
+from datetime import datetime
 
 
-def main():
+def work_work():
     if Daoyu.initialize():
-        phone_number, device_id, manuid, daoyu_key_init, main_key, sms_enable, show_username =(
-            Daoyu.config_handler()[1], Daoyu.config_handler()[7], Daoyu.config_handler()[8],Daoyu.config_handler()[9],
-            Daoyu.config_handler()[10], Daoyu.config_handler()[11],Daoyu.config_handler()[12])
+        phone_number, device_id, manuid, daoyu_key_init, main_key, sms_enable, show_username = (
+            Daoyu.config_handler()[1], Daoyu.config_handler()[7], Daoyu.config_handler()[8], Daoyu.config_handler()[9],
+            Daoyu.config_handler()[10], Daoyu.config_handler()[11], Daoyu.config_handler()[12])
         if main_key == '' and show_username == '' and sms_enable == '0' and daoyu_key_init == '1':
             confirm = input("你选择了短信登录，请注意，你其他设备的叨鱼APP将掉线，请输入Y确认或N退出：")
             if confirm != 'Y':
@@ -54,4 +56,11 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # 创建一个调度器
+    scheduler = BlockingScheduler()
+
+    # 添加任务到调度器，立即执行一次，然后每天的 21 点执行一次
+    scheduler.add_job(work_work, 'cron', hour=21, minute=0, second=0, next_run_time=datetime.now())
+
+    # 启动调度器
+    scheduler.start()
