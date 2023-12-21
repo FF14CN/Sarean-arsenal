@@ -47,7 +47,7 @@ smtp-ssl = True
 [![1703144461590.webp](https://infrasimage-r2.cf.cdn.infras.host/2023/12/21/6583ec04d0242.webp)](https://infrasimage-r2.cf.cdn.infras.host/2023/12/21/6583ec04d0242.webp)
 
 #### SMTP邮件
-请自行Google/百度：“QQ邮箱SMTP发件教程” “XX邮箱SMTP教程”
+请自行Google/百度：“QQ邮箱SMTP发件教程” “XX邮箱SMTP教程”。  
 **请注意，SMTP的`Push-key`为邮件收件人，例如 `1000@qq.com`**
 
 ## 调用教程
