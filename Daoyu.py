@@ -6,6 +6,7 @@ import os
 from kuai_log import get_logger
 import json
 import time
+import re
 
 # print('Daoyu Module [FUCK SQ] - By Pipirapira 2023/12/20')
 
@@ -24,6 +25,16 @@ def get_path():
 # 手机号打码
 def phone_encrypt(self):
     return self.replace(self[1:10], '*********')
+
+
+# DYKey打码
+def dykey_encrypt(self):
+    return re.sub(r"(?<=DY_)(.*)(?=..)", lambda match: '*' * len(match.group(1)), self)
+
+
+def guid_encrypt(self):
+    return re.sub(r"(?<=daoyu_)(.*)(?=\w{2})",
+                  lambda match: match.group(1)[:2] + '*' * (len(match.group(1)) - 4) + match.group(1)[-2:], self)
 
 
 # Json检查
@@ -83,11 +94,17 @@ def config_handler():
     codetype = config.get('OCR', 'CodeType')
     device_id = config.get('Normal', 'DeviceID')
     manuid = config.get('Normal', 'ManuID')
-    daoyu_key_init = config.get('Normal','DaoyuKeyInit')
-    daoyu_key = config.get('Normal','DaoyuKey')
-    sms_enable = config.get('Normal','SMSLoginEnable')
-    show_username = config.get('Normal','ShowUsername')
-    logger_logs.info('读取配置文件成功')
+    daoyu_key_init = config.get('Normal', 'DaoyuKeyInit')
+    daoyu_key = config.get('Normal', 'DaoyuKey')
+    sms_enable = config.get('Normal', 'SMSLoginEnable')
+    show_username = config.get('Normal', 'ShowUsername')
+    logger_logs.info(f'Get Config File Success, Config File Path: {get_path()}/config.ini ,'
+                     f'daoyu_key_init: {daoyu_key_init}, '
+                     f'sms_enable: {sms_enable}, '
+                     f'show_username: {show_username}'
+                     f'daoyu_key: {dykey_encrypt(daoyu_key)}'
+                     f'device_id: {device_id}, '
+                     f'manuid: {manuid}')
     return (host, phone_number, config_server, username, password, soft_id, codetype, device_id, manuid,
             daoyu_key_init, daoyu_key, sms_enable, show_username)
 
@@ -136,12 +153,11 @@ def get_guid(device_id, manuid):
     guid = guid_json['data']['guid']
     scene = guid_json['data']['scene']
     if guid != '' and scene != '':
-        logger_logs.info('guid:' + guid + ' scene:' + scene)
+        logger_logs.info('guid:' + guid_encrypt(guid) + ' scene:' + scene)
         return guid, scene
     else:
         logger_logs.error('Guid or Scene Error', guid_json)
-        logger_stream.error('致命错误，获取Guid失败了，请尝试重启程序，或使用程序目录下的/tools/DeviceGen.exe重新为您分配一个设备，'
-                            '程序即将停止。')
+        logger_stream.error('致命错误，获取Guid失败了，程序即将停止。')
         return None
 
 
@@ -277,17 +293,17 @@ def get_main_key(manu_id, device_id, guid, phone_number, scene):
         nick_name = sms_login_json['data']['nickname']
         show_username = sms_login_json['data']['show_username']
         logger_stream.info(f'你好,{nick_name},目前一切正常...程序将继续执行剩余任务...')
-        logger_logs.info(f'Username:{nick_name}, UserSessid: {user_sessid}')
         config = configparser.ConfigParser()
         config.read(f'{get_path()}/config.ini', encoding='utf-8')
         config.set('Normal', 'DaoyuKeyInit', '0')
         config.set('Normal', 'DaoyuKey', user_sessid)
-        config.set('Normal','ShowUsername',show_username)
+        config.set('Normal', 'ShowUsername', show_username)
         try:
             with open(f'{get_path()}/config.ini', 'w', encoding='utf-8') as configfile:
                 config.write(configfile)
         except Exception as e:
-            logger_stream.info('写配置项失败,请手动修改config.ini ' + 'DaoyuKey: ' + user_sessid,'ShowUsername: ' + show_username)
+            logger_stream.info('写配置项失败,请手动修改config.ini ' + 'DaoyuKey: ' + user_sessid,
+                               'ShowUsername: ' + show_username)
             logger_logs.error('write config.ini error: ' + str(e))
         return user_sessid, show_username
     else:
@@ -335,7 +351,7 @@ def get_flowid(manuid, deviceid, sessionid, show_username):
     logger_logs.debug(get_flowid_json)
     if get_flowid_json['return_code'] == 0:
         flowid = get_flowid_json['data']['flowId']
-#        logger_stream.info('获取叨鱼票据中，获取浮动值成功 1/4.')
+        #        logger_stream.info('获取叨鱼票据中，获取浮动值成功 1/4.')
         logger_logs.info('flowid: ' + flowid)
         return flowid
     else:
@@ -345,7 +361,7 @@ def get_flowid(manuid, deviceid, sessionid, show_username):
 
 
 # step 2/4 Get accountID list
-def get_account_id_list(flowid,deviceid, manuid, sessionid, show_username):
+def get_account_id_list(flowid, deviceid, manuid, sessionid, show_username):
     get_account_id_list_url = 'https://daoyu.sdo.com/api/thirdPartyAuth/queryAccountList'
     get_account_id_list_params = {
         'flowId': flowid,
@@ -389,12 +405,6 @@ def get_account_id_list(flowid,deviceid, manuid, sessionid, show_username):
 
 # step 3/4 Confirm with server
 def make_confirm(account_id, flowid, deviceid, manuid, sessionid, show_username):
-    logger_logs.debug('account_id: ' + account_id)
-    logger_logs.debug('flowid: ' + flowid)
-    logger_logs.debug('deviceid: ' + deviceid)
-    logger_logs.debug('manuid: ' + manuid)
-    logger_logs.debug('sessionid: ' + sessionid)
-    logger_logs.debug('show_username: ' + show_username)
     make_confirm_url = 'https://daoyu.sdo.com/api/thirdPartyAuth/chooseAccount?'
     make_confirm_header = {
         'authority': 'daoyu.sdo.com',
@@ -430,17 +440,13 @@ def make_confirm(account_id, flowid, deviceid, manuid, sessionid, show_username)
     if confirm_message == 'success':
         return True
     else:
-        logger_logs.debug(f'account_id:{account_id}')
         logger_stream.info(f'获取叨鱼票据步骤中，和服务器握手失败 3/4')
         logger_logs.error(f'确认失败，原因：{confirm_message}')
         return False
 
 
 # step 4/4 Get DaoyuTicket
-def get_sub_account_key(flowid, manuid, deviceid,main_key,show_username):
-    logger_logs.debug('flowid: ' + flowid)
-    logger_logs.debug('manuid: ' + manuid)
-    logger_logs.debug('deviceid: ' + deviceid)
+def get_sub_account_key(flowid, manuid, deviceid, main_key, show_username):
     get_daoyu_ticket_url = 'https://daoyu.sdo.com/api/thirdPartyAuth/confirm?'
     get_daoyu_ticket_header = {
         'authority': 'daoyu.sdo.com',
@@ -469,11 +475,12 @@ def get_sub_account_key(flowid, manuid, deviceid,main_key,show_username):
         'show_username': show_username,
     }
     get_daoyu_ticket_response = requests.get(get_daoyu_ticket_url, params=get_daoyu_ticket_params,
-                                             headers=get_daoyu_ticket_header, cookies=get_daoyu_ticket_cookies,verify=False)
+                                             headers=get_daoyu_ticket_header, cookies=get_daoyu_ticket_cookies,
+                                             verify=False)
     get_daoyu_ticket_json = get_daoyu_ticket_response.json()
     if get_daoyu_ticket_json['return_code'] == 0:
         daoyu_ticket = get_daoyu_ticket_json['data']['authorization']
-#        logger_stream.info(f'获取叨鱼票据成功， 4/4.')
+        #        logger_stream.info(f'获取叨鱼票据成功， 4/4.')
         return daoyu_ticket
     else:
         logger_logs.error(f'Get_daoyuTicket error，{get_daoyu_ticket_json}')
@@ -545,16 +552,15 @@ def get_sub_account_session(sub_account_key, temp_account_sessionid):
         'sessionId': temp_account_sessionid
     }
     get_temp_sessionid_response = requests.get(get_sub_account_session_url, params=get_sub_account_session_params,
-                                               headers=get_sub_account_session_header, cookies=get_sub_account_session_cookies,
+                                               headers=get_sub_account_session_header,
+                                               cookies=get_sub_account_session_cookies,
                                                verify=False)
     session_id = get_temp_sessionid_response.cookies.get('sessionId')
-    logger_logs.debug('session_id:' + get_temp_sessionid_response.text)
-    logger_logs.debug('session_id:' + get_temp_sessionid_response.cookies.get('sessionId'))
     return session_id
 
 
 # Do sign
-def do_sign(sub_session_id,account_id):
+def do_sign(sub_session_id, account_id):
     sign_url = 'https://sqmallservice.u.sdo.com/api/us/integration/checkIn'
     sign_data = {'merchantId': 1}
     sign_header = {
@@ -578,11 +584,10 @@ def do_sign(sub_session_id,account_id):
     }
     sign_cookies = {
         'sessionId': sub_session_id,
-        'direbmemllam':account_id,
+        'direbmemllam': account_id,
     }
-    sign_response = requests.put(sign_url, headers=sign_header, cookies=sign_cookies, data=sign_data,verify=False)
+    sign_response = requests.put(sign_url, headers=sign_header, cookies=sign_cookies, data=sign_data, verify=False)
     sign_json = sign_response.json()
-    logger_logs.debug(sign_json)
     if sign_json['resultMsg'] == 'SUCCESS':
         logger_logs.debug('sign success')
         return 0
