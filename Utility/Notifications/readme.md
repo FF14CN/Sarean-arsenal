@@ -48,6 +48,7 @@ smtp-ssl = True
 
 #### SMTP邮件
 请自行Google/百度：“QQ邮箱SMTP发件教程” “XX邮箱SMTP教程”
+**请注意，SMTP的`Push-key`为邮件收件人，例如 `1000@qq.com`**
 
 ## 调用教程
 此章节内容仅供开发者使用，普通用户无需关注此部分内容。
