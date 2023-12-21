@@ -13,13 +13,13 @@ import re
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 logger_stream = get_logger('INFO', level=logging.INFO, is_add_stream_handler=True)
 logger_logs = get_logger('DEBUG', level=logging.DEBUG, is_add_file_handler=True, is_add_stream_handler=False,
-                         log_path=f'{os.path.dirname(os.path.abspath(__file__))}/logs/',
+                         log_path=f'{os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))}/logs/',
                          log_filename='latest.log')
 
 
 # 获取路径
 def get_path():
-    return os.path.dirname(os.path.abspath(__file__))
+    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # 手机号打码
