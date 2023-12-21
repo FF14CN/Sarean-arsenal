@@ -1,6 +1,7 @@
-import Daoyu
+from FF14AutoSign.Utility.sdoLogin import Daoyu
 from apscheduler.schedulers.blocking import BlockingScheduler
 from datetime import datetime
+import Utility.Notifications.push as pusher
 
 
 def work_work():
@@ -29,6 +30,7 @@ def work_work():
         account_id_list = Daoyu.get_account_id_list(flowid, device_id, manuid, main_key, show_username)
         temp_account_sessionid = Daoyu.get_temp_sessionid(main_key)
         if account_id_list is not None:
+            results = []
             for index, account_id in enumerate(account_id_list):
                 if Daoyu.make_confirm(account_id["accountId"], flowid, device_id, manuid, main_key, show_username):
                     sub_account_key = Daoyu.get_sub_account_key(flowid, manuid, device_id, main_key, show_username)
@@ -37,19 +39,31 @@ def work_work():
                     if sign_msg == 0:
                         Daoyu.logger_stream.info(
                             f'账号{account_id["displayName"]}签到成功，当前积分余额{Daoyu.get_balance(sub_account_session)}')
+                        sub_msg = f'账号{account_id["displayName"]}签到成功，当前积分余额{Daoyu.get_balance(sub_account_session)},'
+                        results.append(sub_msg)
                         if index + 1 < len(account_id_list):
                             flowid = Daoyu.get_flowid(manuid, device_id, main_key, show_username)
                     elif sign_msg == 1:
                         Daoyu.logger_stream.info(
                             f'账号{account_id["displayName"]}已经签到过了，当前积分余额{Daoyu.get_balance(sub_account_session)}')
+                        sub_msg = f'账号{account_id["displayName"]}已经签到过了，当前积分余额{Daoyu.get_balance(sub_account_session)},'
+                        results.append(sub_msg)
                         if index + 1 < len(account_id_list):
                             flowid = Daoyu.get_flowid(manuid, device_id, main_key, show_username)
                     else:
                         Daoyu.logger_stream.info(f'账号{account_id["displayName"]}签到失败)')
+                        sub_msg = f'账号{account_id["displayName"]}签到失败),'
+                        results.append(sub_msg)
                         if index + 1 < len(account_id_list):
                             flowid = Daoyu.get_flowid(manuid, device_id, main_key, show_username)
                 else:
                     Daoyu.logger_stream.info(f'账号{account_id["displayName"]}与服务器握手失败')
+            msg = pusher.push('盛趣商城自动签到助手', ''.join(results))
+            if msg['status'] == 'success':
+                Daoyu.logger_stream.info('推送消息成功')
+            else:
+                Daoyu.logger_stream.info('推送消息失败，请检查消息推送服务是否配置成功')
+                Daoyu.logger_logs.error(msg)
 
         else:
             Daoyu.logger_stream.info('没有发现你的账户，请检查logs文件')
