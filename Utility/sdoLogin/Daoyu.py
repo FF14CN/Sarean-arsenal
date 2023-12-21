@@ -115,7 +115,7 @@ def initialize():
         logger_stream.info('检测到存在配置文件，无需进行初始化...')
         return True
     else:
-        url = 'https://pipirapira.com/config/config_2.0.1.ini'
+        url = 'https://pipirapira.com/config/config.ini'
         local_filename = f'{get_path()}/config.ini'
         try:
             logger_stream.info('检测到第一次运行，正在从云端同步配置文件..')
