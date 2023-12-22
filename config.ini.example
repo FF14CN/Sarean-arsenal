@@ -36,15 +36,3 @@ smtp-username = ""
 smtp-password = ""
 smtp-ssl = True
 
-[OCR]
-;如没开启短信登录无需配置
-host =
-username =
-password =
-softid =
-codetype = 4006
-
-[Develop]
-;配置文件初始化地址，一般情况下无需修改
-configserver = http://pipirapira.com/config/config.ini
-
