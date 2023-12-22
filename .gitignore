@@ -4,5 +4,6 @@
 *.zip
 DO_NOT_PUSH/
 logs/
+Temp/
 *.pyc
 *.log
