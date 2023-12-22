@@ -14,9 +14,10 @@ daoyukey =
 ;show_Username 关键参数
 showusername =
 
+;石之家相关配置，无需手动填写。
 [RisingStones]
 rs_cookies=
-
+rs_cookies_expires =
 
 [Notification]
 ;若要启用消息通知，请将noc-enable设置为True,并根据说明正确配置push-key
