@@ -3,3 +3,4 @@
 *.zip
 *.zip
 DO_NOT_PUSH/
+*.pyc
