@@ -1,9 +1,8 @@
 /venv/
 /.idea/
-*.zip
-*.zip
 DO_NOT_PUSH/
 logs/
 Temp/
 *.pyc
+*.zip
 *.log
