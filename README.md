@@ -6,7 +6,7 @@
 **项目完全开源，以至于你可以完全阅读作者的每一行写的很屎的代码，但是可以确保你的账号安全**  
 **没有logs无异于闭眼开车，Logs中的敏感信息已剔除，没有日志或合理错误说明的Issue将被直接关闭！**  
 **请仔细阅读教程，教程中说过的再问，可能会获得一个很不好的结果（指直接关闭Issue）**
-![1 EHPYL2~EBPA{9B43{X)4W](https://github.com/status102/FF14AutoSign/assets/102887808/af31578e-da14-427f-835e-448ab2c9f3a0)  
+[![c4765f39e308ddf41f74890d36f54d39.webp](https://infrasimage-r2.cf.cdn.infras.host/2023/12/22/65854fa135d83.webp)](https://infrasimage-r2.cf.cdn.infras.host/2023/12/22/65854fa135d83.webp)
 
 **程序也支持短信登录，但是会造成你其他平台的叨鱼APP掉线，我本人并不推荐，**  
 **我教程中所用的方法是使用你的当前登录已经登录叨鱼的平台参数，应该对你已经登陆的设备没有影响，**  
