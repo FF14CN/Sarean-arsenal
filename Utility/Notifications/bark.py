@@ -29,7 +29,6 @@ def send(title: str, content: str):
         "isArchive": 1,
     }
     response = requests.post(url, headers=headers, json=load)
-    # print(response.text)
     if response.status_code == 200:
         return {'status': 'success'}
     else:
