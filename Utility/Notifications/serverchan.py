@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import configparser
-import urllib.parse
 import requests
 
 
