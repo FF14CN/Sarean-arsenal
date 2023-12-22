@@ -3,3 +3,6 @@
 *.zip
 *.zip
 DO_NOT_PUSH/
+logs/
+*.pyc
+*.log

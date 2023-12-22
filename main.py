@@ -1,4 +1,4 @@
-from FF14AutoSign.Utility.sdoLogin import Daoyu
+from Utility.sdoLogin import Daoyu
 from apscheduler.schedulers.blocking import BlockingScheduler
 from datetime import datetime
 import Utility.Notifications.push as pusher

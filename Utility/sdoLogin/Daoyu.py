@@ -17,11 +17,6 @@ logger_logs = get_logger('DEBUG', level=logging.DEBUG, is_add_file_handler=True,
                          log_filename='latest.log')
 
 
-# 获取路径
-def get_path():
-    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
 # 手机号打码
 def phone_encrypt(self):
     return self.replace(self[1:10], '*********')
@@ -32,6 +27,7 @@ def dykey_encrypt(self):
     return re.sub(r"(?<=DY_)(.*)(?=..)", lambda match: '*' * len(match.group(1)), self)
 
 
+# Guid打码
 def guid_encrypt(self):
     return re.sub(r"(?<=daoyu_)(.*)(?=\w{2})",
                   lambda match: match.group(1)[:2] + '*' * (len(match.group(1)) - 4) + match.group(1)[-2:], self)
@@ -84,7 +80,7 @@ def ocr_handler(self):
 # 配置文件读取
 def config_handler():
     config = configparser.ConfigParser()
-    config.read(f'{get_path()}/config.ini', encoding='utf-8')
+    config.read('config.ini', encoding='utf-8')
     host = config.get('OCR', 'Host')
     phone_number = config.get('Normal', 'PhoneNumber')
     config_server = config.get('Develop', 'ConfigServer')
@@ -98,7 +94,7 @@ def config_handler():
     daoyu_key = config.get('Normal', 'DaoyuKey')
     sms_enable = config.get('Normal', 'SMSLoginEnable')
     show_username = config.get('Normal', 'ShowUsername')
-    logger_logs.info(f'Get Config File Success, Config File Path: {get_path()}/config.ini ,'
+    logger_logs.info(f'Get Config File Success, Config File Path: config.ini ,'
                      f'daoyu_key_init: {daoyu_key_init}, '
                      f'sms_enable: {sms_enable}, '
                      f'show_username: {show_username}'
@@ -111,12 +107,12 @@ def config_handler():
 
 # 初始化检测
 def initialize():
-    if os.path.exists(f'{get_path()}/config.ini'):  # 检测配置文件是否存在
+    if os.path.exists('config.ini'):  # 检测配置文件是否存在
         logger_stream.info('检测到存在配置文件，无需进行初始化...')
         return True
     else:
         url = 'https://pipirapira.com/config/config.ini'
-        local_filename = f'{get_path()}/config.ini'
+        local_filename = 'config.ini'
         try:
             logger_stream.info('检测到第一次运行，正在从云端同步配置文件..')
             requests.get(url, verify=False).raise_for_status()
@@ -214,9 +210,9 @@ def get_main_key(manu_id, device_id, guid, phone_number, scene):
 
         captcha_response = requests.get(captcha_img_url, params=captcha_img_params, headers=captcha_img_headers,
                                         verify=False)
-        with open(f'{get_path()}/Temp/Captcha.jpeg', 'wb') as f:
+        with open('Temp/Captcha.jpeg', 'wb') as f:
             f.write(captcha_response.content)
-        captcha_img = open(f'{get_path()}/Temp/Captcha.jpeg', 'rb').read()
+        captcha_img = open('Temp/Captcha.jpeg', 'rb').read()
         captcha_code = ocr_handler(captcha_img)
 
         # 校验OCR的验证码
@@ -294,12 +290,12 @@ def get_main_key(manu_id, device_id, guid, phone_number, scene):
         show_username = sms_login_json['data']['show_username']
         logger_stream.info(f'你好,{nick_name},目前一切正常...程序将继续执行剩余任务...')
         config = configparser.ConfigParser()
-        config.read(f'{get_path()}/config.ini', encoding='utf-8')
+        config.read('config.ini', encoding='utf-8')
         config.set('Normal', 'DaoyuKeyInit', '0')
         config.set('Normal', 'DaoyuKey', user_sessid)
         config.set('Normal', 'ShowUsername', show_username)
         try:
-            with open(f'{get_path()}/config.ini', 'w', encoding='utf-8') as configfile:
+            with open('config.ini', 'w', encoding='utf-8') as configfile:
                 config.write(configfile)
         except Exception as e:
             logger_stream.info('写配置项失败,请手动修改config.ini ' + 'DaoyuKey: ' + user_sessid,
