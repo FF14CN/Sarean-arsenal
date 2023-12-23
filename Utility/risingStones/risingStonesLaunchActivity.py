@@ -113,8 +113,8 @@ def run():
     cookies = rs_login()
     userTaskInfo = getUserTaskInfo(cookies)
     userInfo = rs_userInfo(cookies)["msg"]
-    print("当前登录账户" + userInfo["character_name"] + "@" + userInfo["group_name"])
-    print("当前签到状态：" + str(userTaskInfo))
+    print("当前登录账户:" + userInfo["character_name"] + "@" + userInfo["group_name"])
+    print("当前签到状态:" + str(userTaskInfo))
     # if userTaskInfo["sign_status"] == 1:
     # 不知道为什么，没签到也是1
     finishTask(cookies, "signIn")
@@ -137,7 +137,7 @@ def run():
     # 领奖
     for rewardNum in [3, 5, 9, 15, 19, 24, 27, 30]:
         sleep(10)
-        print("Day=" + str(rewardNum) + getSealReward(cookies, rewardNum))
+        print("Day=" + str(rewardNum) + str(getSealReward(cookies, rewardNum)))
 
     userTaskInfo = getUserTaskInfo(cookies)
     print("当前签到状态：" + str(userTaskInfo))

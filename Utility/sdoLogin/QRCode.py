@@ -101,7 +101,6 @@ def qrcode_check(appId, areaId, serviceUrl):
             # 判断是否扫码 并将携带ticket的cookie传递
             if return_code != -10515805:
                 ticket_cookie = res.cookies
-                print(obj)
                 ticket = obj["data"]["ticket"]
                 print(
                     f'[{get_current_time()}]' + f'侦测到你拿起了手机,现在请放下手机并耐心等待.[你问我怎么知道你拿起了手机?]')

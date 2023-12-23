@@ -100,5 +100,65 @@ def rs_cookies_init():
             return cookies
 
 
+def get_areaID(cookies, area_name):
+    """
+    获取服务器区域ID
+    :return: int
+    """
+    getAreaAndGroupListUrl = "https://apiff14risingstones.web.sdo.com/api/home/groupAndRole/getAreaAndGroupList"
+    headers = {
+        "User-Agent": user_agent,
+        "Cookie": cookies
+    }
+    areaAndGroupList = requests.get(getAreaAndGroupListUrl, headers=headers).json()["data"]
+    for area in areaAndGroupList:
+        if area["AreaName"] == area_name:
+            return area["AreaID"]
+
+
+def get_characterID(cookies, areaID, character_name):
+    """
+    获取角色ID
+    :return: str
+    """
+    getCharacterListUrl = f"https://apiff14risingstones.web.sdo.com/api/home/groupAndRole/getFF14Characters?AreaID={areaID}"
+    headers = {
+        "User-Agent": user_agent,
+        "Cookie": cookies
+    }
+    characterList = requests.get(getCharacterListUrl, headers=headers).json()["data"]
+    for character in characterList:
+        if character["character_name"] == character_name:
+            return str(character["character_id"])
+
+
+def rs_character_bind(cookies):
+    """
+    绑定石之家角色
+    :return: dict cookies
+    """
+    rs_config = configparser.RawConfigParser()
+    rs_config.read('config.ini', encoding='UTF-8')
+    rs_character = rs_config.get('RisingStones', 'rs_character')
+    rs_area = rs_config.get('RisingStones', 'rs_area')
+
+    bindUrl = "https://apiff14risingstones.web.sdo.com/api/home/groupAndRole/bindCharacterInfo"
+    headers = {
+        "User-Agent": user_agent,
+        "Cookie": cookies
+    }
+    areaID = get_areaID(cookies, rs_area)
+    characterID = get_characterID(cookies, areaID, rs_character)
+    payload = {
+        "character_id": characterID,
+        "platform": 1,
+        "device_id": "IOS20230530",
+    }
+    bindResult = requests.post(bindUrl, headers=headers, data=payload)
+    return bindResult
+
+
 def login():
-    return rs_cookies_init()
+    cookies = rs_cookies_init()
+    print("绑定结果：", rs_character_bind(cookies))
+    return cookies
