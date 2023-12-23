@@ -54,7 +54,6 @@ def rs_cookies_login(cookies):
                         "://ff14risingstones.web.sdo.com/pc/index.html&ticket=") + sdoLogin_ticket
 
     activeCookies = requests.get(activeCookiesUrl, headers=headers)
-    print(activeCookies.text)
 
 
 def rs_cookies_init():
