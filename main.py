@@ -8,7 +8,7 @@ Description: Do SQMALL AUTO SIGN, FUCK SQ BY THE WAY
 """
 from Utility.sdoLogin import Daoyu
 from Utility.sqMail.daoyuBuildinMallSign import daoyumall_sign
-from Utility.sqMail.daoyuBuildinMailBalance import daoyu_mall_balance
+from Utility.sqMail.daoyuBuildinMallBalance import daoyu_mall_balance
 from apscheduler.schedulers.blocking import BlockingScheduler
 from datetime import datetime
 import Utility.Notifications.push as pusher
