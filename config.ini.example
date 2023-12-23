@@ -3,13 +3,7 @@
 deviceid =
 ;设备型号，关键参数
 manuid =
-;手机号，如果不开启短信登录可不填
-phonenumber =
-;短信登录，默认关闭
-smsloginenable = 1
-;叨鱼Key初始化
-daoyukeyinit = 0
-;叨鱼Key
+;叨鱼Key，关键参数
 daoyukey =
 ;show_Username 关键参数
 showusername =
