@@ -1,6 +1,5 @@
 APScheduler==3.10.4
 kuai_log==0.8
-Pillow==9.5.0
 Pillow==10.1.0
 pyzbar==0.1.9
 qrcode==7.4.2
