@@ -25,8 +25,9 @@
 </div>
 
 
-## TodoList
+## Other
 项目开发计划与进度请移步至 [Dev Status](https://github.com/orgs/FF14CN/projects/1) 查看。
+具体视频教程请查阅B站视频 [视频教程](https://www.bilibili.com/video/BV1Gg4y1k7dr) 查看
 
 ## License
 
