@@ -1,0 +1,39 @@
+name: Feature request
+description: 提出一个新功能
+labels: enhancement
+body:
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 在提问之前...
+      options:
+      - label: 我已确认当前请求的功能不在预订计划内，请查阅：https://github.com/orgs/FF14CN/projects/1
+        required: true
+  - type: textarea
+    id: describe
+    attributes:
+      label: 您的功能请求是否与问题有关？
+      description: '对问题所在的清晰简洁的描述。例如，当[…]'
+    validations:
+      required: true
+  - type: textarea
+    id: first
+    attributes:
+      label: 描述您想要的解决方案
+      description: 对你想要发生的事情进行清晰简洁的描述。
+    validations:
+      required: true
+  - type: textarea
+    id: second
+    attributes:
+      label: 描述您考虑过的备选方案
+      description: 对您考虑过的任何替代解决方案或功能的清晰简洁的描述。
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: 附加上下文
+      description: 在此处添加有关功能请求的任何其他上下文或屏幕截图。
+    validations:
+      required: false

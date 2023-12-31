@@ -1,0 +1,52 @@
+name: Bug report
+description: 提交一个bug帮助我们改善代码
+labels: ['bug']
+body:
+  - type: textarea
+    id: describe
+    attributes:
+      label: 问题描述
+      description: |
+        简短描述该Bug或报错
+        A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: process
+    attributes:
+      label: 重现步骤
+      description: |
+        你是如何触发该错误的？
+        1. 打开 '...'
+        2. 输入 '....'
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 截图
+      description: 如果方便，请提交您的截图
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: 运行环境
+      description: |
+        系统: [e.g. iOS]
+        Python版本 [e.g. 3.7]
+        本软件版本 [e.g. v2.4.1-alpha]
+    validations:
+      required: false
+  - type: textarea
+    id: others
+    attributes:
+      label: 附加消息
+      description: 任何能让我们对你所遇到的问题有更多了解的东西
+    validations:
+      required: false
+  - type: markdown
+    id: notice
+    attributes:
+      value: "**我已确认没有重复的问题**"
+
