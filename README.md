@@ -19,7 +19,7 @@
   <h3>FF14石之家自动签到工具</h3>
 <p>
 使用叨鱼扫码登录实现的石之家相关工具，只需要配置您的角色数据并扫码登录，即可实现石之家自动签到、领取奖励的功能。
-请直接前往<a href="https://github.com/FF14CN/Sarean-arsenal/releases">Releases</a>下载【RS-】开头的Releases文件。
+当你准备好了，请点击这里查看<a href="https://github.com/FF14CN/Sarean-arsenal/wiki/Risingstone-%E7%9F%B3%E4%B9%8B%E5%AE%B6">详细教程</a>。
 </p>
 
 </div>
