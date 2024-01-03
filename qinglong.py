@@ -6,11 +6,11 @@
 # 请确保已经填写好【config.ini】配置文件，此任务将不会引导您填写配置文件。
 import configparser
 
-from main import main as sqMallSign
+from Utility.sqMall import sqMallDoSign as sqMallSign
 from Utility.risingStones import signIn as rs_signin
 from Utility.risingStones import rs_login
 
-sqMallSign()
+sqMallSign.main()
 
 noc_config = configparser.RawConfigParser()
 noc_config.read('config.ini', encoding='utf-8')
