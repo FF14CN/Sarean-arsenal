@@ -1,3 +1,8 @@
+[Modules]
+;需要启用的模组任务，请修改True/False（请注意大小写）
+risingStonesTask = True
+sqMallTask = True
+
 [Normal]
 ;设备ID，关键参数
 deviceid =
