@@ -11,6 +11,10 @@ from Utility.risingStones import signIn as rs_signin
 from Utility.risingStones import rs_login
 from Utility.risingStones import getSignReward as getSignReward
 from Utility.risingStones.rs_login import is_rs_login as rs_userInfo
+from Utility.risingStones.getUserInfo import get_rs_userinfo
+from Utility.risingStones.houseStatusChecker import house_status_checker
+
+
 taskConfig = configparser.RawConfigParser()
 taskConfig.read('config.ini', encoding='utf-8')
 if taskConfig.get('Modules', 'sqMallTask') == 'True':
@@ -35,3 +39,9 @@ if taskConfig.get('Modules', 'risingStonesTask') == 'True':
         userInfo = rs_userInfo(rs_cookies)["msg"]
         accountinfo = "当前登录账户:" + userInfo["character_name"] + "@" + userInfo["group_name"]
         print('石之家任务结果', accountinfo + '\n' + str(rs_result) + '\n' + str(rs_reward))
+
+if taskConfig.get('Modules', 'houseChecker') == 'True':
+    rs_cookies = rs_login.login()
+    user_info = get_rs_userinfo(rs_cookies)
+    print(house_status_checker(user_info))
+    #houseChecker内已经有通知逻辑

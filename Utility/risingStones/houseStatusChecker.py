@@ -35,6 +35,7 @@ def house_status_checker(user_info):
             pusher("石之家房屋状态提醒", "房屋状态未知，具体错误信息：{}".format(houseStatus["error"]))
         if houseStatus["house_status"] == "Normal":
             pusher("石之家房屋状态提醒", "房屋正常")
+        return houseStatus
     else:
         print("通知已关闭,请自行处理返回信息！")
     return houseStatus
