@@ -72,12 +72,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # # 创建一个调度器
-    # scheduler = BlockingScheduler()
-    #
-    # # 添加任务到调度器，立即执行一次，然后每天的 21 点执行一次
-    # scheduler.add_job(main, 'cron', hour=21, minute=0, second=0, next_run_time=datetime.now())
-    #
-    # # 启动调度器
-    # scheduler.start()
     main()
