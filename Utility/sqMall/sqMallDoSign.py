@@ -6,7 +6,7 @@ File: sqMailDoSign.py
 Version: 2.5.0
 Description: Do SQMALL AUTO SIGN, FUCK SQ BY THE WAY
 """
-from Utility.sdologin.Daoyu import Daoyu
+from Utility.sdoLogin.Daoyu import Daoyu
 from Utility.sqMall.daoyuBuildinMallSign import daoyumall_sign
 from Utility.sqMall.daoyuBuildinMallBalance import daoyu_mall_balance
 import Utility.Notifications.push as pusher
