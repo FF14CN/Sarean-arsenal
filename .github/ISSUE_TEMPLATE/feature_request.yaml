@@ -12,8 +12,8 @@ body:
   - type: textarea
     id: describe
     attributes:
-      label: 您的功能请求是否与问题有关？
-      description: '对问题所在的清晰简洁的描述。例如，当[…]'
+      label: 您的功能请求是否与当前存在问题有关？
+      description: '对问题所在的清晰简洁的描述。例如，我在[？？]的情况下无法解决，需要[？？]功能。若不是，请填写【无关】'
     validations:
       required: true
   - type: textarea
