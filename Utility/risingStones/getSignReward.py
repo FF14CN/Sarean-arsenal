@@ -90,11 +90,12 @@ def getReward(cookies):
         }
         index = 1
         for status in rewardStatus["data"]:
-            if status["is_get"] == 1:
+            if status["is_get"] == 0:
+                time.sleep(10)
                 getResult = getSignIDReward(cookies, index)
                 returnMsg["data"][index - 1]["claimStatus"] = str(getResult)
             else:
-                claimStatus = f"奖励{index}不满足领取条件！"
+                claimStatus = f"奖励{index}不满足领取条件！或已领取！"
                 print(claimStatus)
                 returnMsg["data"][index - 1]["claimStatus"] = claimStatus
             index += 1
