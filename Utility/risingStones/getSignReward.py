@@ -1,3 +1,4 @@
+from datetime import datetime
 import time
 
 import requests
@@ -91,10 +92,11 @@ def getReward(cookies):
             ]
         }
         index = 1
+        today = datetime.now()
         for status in rewardStatus["data"]:
             if status["is_get"] == 0:
                 time.sleep(10)
-                getResult = getSignIDReward(cookies, index)
+                getResult = getSignIDReward(cookies, index,today.strftime("%Y-%m"))
                 returnMsg["data"][index - 1]["claimStatus"] = str(getResult)
             else:
                 claimStatus = f"奖励{index}不满足领取条件！或已领取！"
