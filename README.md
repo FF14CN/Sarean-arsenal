@@ -11,8 +11,8 @@
 </div>
 
 ### 重中之重
-本项目 **仅供学习交流，严禁用于商业用途，请勿修改贩卖，**  
-本项目仅在GitHub上开源发布，如您通过其他来源获取则有可能对您的账号造成盗号风险。  
+本项目 **遵循AGPL V3协议开源 请勿商用**  
+本项目仅在GitHub上开源发布，如您通过其他方式获取则有可能对您的账号造成盗号风险请自行鉴别。  
 本项目完全使用官方API进行操作，按理来说不存在任何封禁风险，除非盛趣闲的蛋疼。  
 在任何情况下都不要泄露自己的**UserSessionID**给其他人
 
@@ -38,4 +38,4 @@
 IOS详细叨鱼抓包教程 [B站视频](https://www.bilibili.com/video/BV1Ka4y1z71c)  
 ## License
 
-[With MIT](https://github.com/FF14CN/FF14AutoSign/blob/main/LICENSE)
+[With AGPL V3](https://github.com/FF14CN/FF14AutoSign/blob/main/LICENSE)
