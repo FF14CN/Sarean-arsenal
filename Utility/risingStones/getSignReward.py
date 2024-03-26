@@ -32,11 +32,12 @@ def getRewardStatus(cookies):
         }
 
 
-def getSignIDReward(cookies, rewardId):
+def getSignIDReward(cookies, rewardId,rewardMonth):
     """
     获取签到奖励
     :param cookies: 石之家登录后的cookie
     :param rewardId: 签到奖励状态内的id
+    :param rewardMonth: 签到奖励的月份
     """
     getRewardUrl = "https://apiff14risingstones.web.sdo.com/api/home/sign/getSignReward"
     headers = {
@@ -45,7 +46,8 @@ def getSignIDReward(cookies, rewardId):
         "Cookie": cookies
     }
     payload = {
-        "id": int(rewardId)
+        "id": int(rewardId),
+        "month": rewardMonth
     }
     getReward = requests.post(url=getRewardUrl, headers=headers, data=payload).json()
     if getReward["code"] == 10000:
