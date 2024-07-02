@@ -1,6 +1,8 @@
+"""
+Des: 石之家用户信息组件，获取特定uuid的用户信息
+Note: 此文件待更新，用到的时候再说。
+"""
 import requests
-
-
 def get_rs_userinfo(cookies,uuid):
     """
     石之家用户信息组件，获取特定uuid的用户信息
