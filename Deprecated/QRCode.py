@@ -39,6 +39,10 @@ def qrcode_get(appId,areaId):
     global skey, barcode_url
     # 获取二维码缓存到本地
     qrcode_url = "https://w.cas.sdo.com/authen/getcodekey.jsonp?&appId=" + str(appId) + "&areaId=" + str(areaId) + "/getcodekey.png"
+    # Debug
+    # OLD: https://w.cas.sdo.com/authen/getcodekey.jsonp?&appId=6788&areaId=1/getcodekey.png
+    # NEW: https://w.cas.sdo.com/authen/getcodekey.jsonp?maxsize=145&appId=6666&areaId=-1&r=0.9117460320224715
+    print(qrcode_url)
     res = requests.get(qrcode_url, headers=header, verify=False)
     skey_cookie = res.cookies
     with open(f"{get_path()}/temp/qrcode.png", 'wb') as f:

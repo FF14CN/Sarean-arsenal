@@ -13,13 +13,6 @@ daoyukey =
 ;show_Username 关键参数
 showusername =
 
-;石之家相关配置,请填写角色名和大区，大区重名角色可能影响运行。
-[RisingStones]
-rs_cookies =
-rs_cookies_expires =
-rs_character = pipirapira
-rs_area = 猫小胖
-
 [Notification]
 ;若要启用消息通知，请将noc-enable设置为True,并根据说明正确配置push-key
 noc-enable = False
