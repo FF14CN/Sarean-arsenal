@@ -21,10 +21,15 @@ from Utility.risingStones.rs_login import rs_bind as rs_bind
 from Utility.risingStones.houseStatusChecker import house_status_checker as house_status_checker
 
 
+
+
 def daily_task():
+
+    final_msg = ''
     flowid = get_flowid()
     account_id_list = get_account_id_list(flowid)
     if account_id_list is not None:
+
         for index, account_id in enumerate(account_id_list):
             display_name = account_id["displayName"]
             rs_login.logger_stream.info(f'当前操作账户 [{index + 1}] [{display_name}]')
@@ -50,22 +55,30 @@ def daily_task():
                         print(f'sign-msg：{sign_in_msg}')
                         print(f'get-reward-msg：{get_reward_msg}')
                         print(f'house-info-msg：{house_msg}')
-                    final_msg = f'石之家任务结果, {sign_in_msg}, {get_reward_msg}, {house_msg}'
+                    msg = f'{display_name}石之家任务结果, {sign_in_msg}, {get_reward_msg}, {house_msg}'
+                    final_msg = msg + final_msg
                     rs_login.logger_stream.info(final_msg)
                     if rs_login.debug:
                         print(final_msg)
                     if index + 1 < len(account_id_list):
                         flowid = get_flowid()
                 else:
+                    msg = f'{display_name}登录石之家失败，可能的原因是没有在手机端绑定游戏内角色。'
+                    final_msg = msg + final_msg
                     if index + 1 < len(account_id_list):
                         flowid = get_flowid()
             else:
+                msg = f'{display_name}与服务器鉴权失败，请检查config.ini是否正确配置'
+                final_msg = msg + final_msg
                 if index + 1 < len(account_id_list):
                     flowid = get_flowid()
 
 
     else:
-        print("拉取账号列表失败，请检查config.ini中的参数是否正确设置")
+        msg = '拉取账号列表失败，请检查config.ini中的参数是否正确设置'
+        final_msg = msg + final_msg
+
+    return final_msg
 
 
 
