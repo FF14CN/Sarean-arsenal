@@ -7,13 +7,7 @@
 import configparser
 
 from Utility.sqMall import sqMallDoSign as sqMallSign
-from Utility.risingStones import signIn as rs_signin
-from Utility.risingStones import rs_login
-from Utility.risingStones import getSignReward as getSignReward
-from Utility.risingStones.rs_login import is_rs_login as rs_userInfo
-from Utility.risingStones.getUserInfo import get_rs_userinfo
-from Utility.risingStones.houseStatusChecker import house_status_checker
-
+from Utility.risingStones.dailytask import daily_task as lets_go
 
 taskConfig = configparser.RawConfigParser()
 taskConfig.read('config.ini', encoding='utf-8')
@@ -26,22 +20,10 @@ if taskConfig.get('Modules', 'risingStonesTask') == 'True':
     if noc_config.get('Notification', 'noc-enable') == 'True':
         import Utility.Notifications.push as pusher
 
-        rs_cookies = rs_login.login()
-        rs_result = rs_signin.rs_signin(rs_cookies)
-        rs_reward = getSignReward.getReward(rs_cookies)
-        userInfo = rs_userInfo(rs_cookies)["msg"]
-        accountinfo = "当前登录账户:" + userInfo["character_name"] + "@" + userInfo["group_name"]
-        pusher.push('石之家任务结果', accountinfo + '\n' + str(rs_result) + '\n' + str(rs_reward))
+        msg = lets_go()
+        pusher.push('石之家任务结果', msg)
     else:
-        rs_cookies = rs_login.login()
-        rs_result = rs_signin.rs_signin(rs_cookies)
-        rs_reward = getSignReward.getReward(rs_cookies)
-        userInfo = rs_userInfo(rs_cookies)["msg"]
-        accountinfo = "当前登录账户:" + userInfo["character_name"] + "@" + userInfo["group_name"]
-        print('石之家任务结果', accountinfo + '\n' + str(rs_result) + '\n' + str(rs_reward))
+        import Utility.Notifications.push as pusher
 
-if taskConfig.get('Modules', 'houseChecker') == 'True':
-    rs_cookies = rs_login.login()
-    user_info = get_rs_userinfo(rs_cookies)
-    print(house_status_checker(user_info))
-    #houseChecker内已经有通知逻辑
+        msg = lets_go()
+        pusher.push('石之家任务结果', msg)
