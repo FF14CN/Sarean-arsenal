@@ -1,37 +1,43 @@
+"""
+Author: KuliPoi
+Contact: me@pipirapira.com
+Created: 2024-06-27
+File: rs_login.py
+Version: 1.5.0
+Description: daoyu login into rising stones (Fuck SQ by the way)
+"""
+
 import configparser
-import random
-import time
+import logging
+import sys
 
 import requests
-<<<<<<< Updated upstream
-import Utility.sdoLogin.QRCode as QRCode
-=======
 import urllib3
 from kuai_log import get_logger
 from Utility.risingStones import constant
->>>>>>> Stashed changes
 
-user_agent = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 "
-              "Safari/537.36")
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+dev = False
+rs_config = configparser.RawConfigParser()
+
+if dev:
+    print('Dev environment detected')
+    rs_config.read('E:\ProJect\Python\Sarean-arsenal\config.ini', encoding='UTF-8')
+else:
+    rs_config.read('config.ini')
+
+if rs_config.get('Debug', 'Debug') == 'True':
+    print("Debug mode on. Everything is cumming to ya.")
+    debug = True
+else:
+    debug = False
+
+logger_stream = get_logger('INFO', level=logging.INFO, is_add_stream_handler=True)
+logger_logs = get_logger('DEBUG', level=logging.DEBUG, is_add_file_handler=True, is_add_stream_handler=False,
+                         log_path='Logs/', log_filename='latest.log')
 
 
-<<<<<<< Updated upstream
-def is_rs_login(cookies):
-    '''
-    Checks if cookie is valid.
-    :return: {"status": True/False, "msg": data}
-    '''
-    is_login_api = "https://apiff14risingstones.web.sdo.com/api/home/GHome/isLogin"
-    headers = {
-        "User-Agent": user_agent,
-        "Cookie": cookies
-    }
-    login_info = requests.get(is_login_api, headers=headers).json()
-    if login_info['code'] == 10000:
-        return {
-            "status": True,
-            "msg": login_info['data']}
-=======
 def rs_tencent_check(response):
     """
     check if banned by tencent-fire-wall [您的请求已被该站点的安全策略拦截]
@@ -74,92 +80,34 @@ def rs_get_temp_cookies():
     """
 
     tp_cookies_url = 'https://apiff14risingstones.web.sdo.com/api/home/GHome/isLogin'
-    get_tp_cookies_response = requests.get(tp_cookies_url, headers=constant.RS_HEADERS_GET, verify=False)
+    headers = {
+        **constant.RS_HEADERS_GET
+    }
+    get_tp_cookies_response = requests.get(tp_cookies_url, headers=headers, verify=False)
     tp_cookies = get_tp_cookies_response.cookies.get('ff14risingstones')
     if tp_cookies != '':
         if debug:
             print('Temp-Cookies: ' + tp_cookies)
         return tp_cookies
->>>>>>> Stashed changes
     else:
-        noc_config = configparser.RawConfigParser()
-        noc_config.read('config.ini', encoding='utf-8')
-        if noc_config.get('Notification', 'noc-enable') == 'True':
-            import Utility.Notifications.push as pusher
-            pusher.push('石之家登陆过期提醒！', '您的Cookie已过期！')
-        return {
-            "status": False,
-            "msg": login_info}
+        logger_logs.error(f'Temp-Cookies is none {get_tp_cookies_response.text}')
+        if debug:
+            print('Temp-Cookies is fucked')
+        return None
 
 
-def rs_cookies_login(cookies):
-    '''
-    调用扫码登录登录石之家,并返回登录后的cookies
-    :return: dict cookies
-    '''
-    login_url = "https://apiff14risingstones.web.sdo.com/api/login/login"
-    headers = {
-        "User-Agent": user_agent,
-        "Cookie": cookies
-    }
-    # 获取扫码登录关键参数，ticket
-    sdoLogin_ticket = QRCode.login("6788", "1",
-                                   "http://apiff14risingstones.web.sdo.com/api/home/GHome/login?redirectUrl=https://ff14risingstones.web.sdo.com/pc/index.htmlp")
-
-    # 将传入的cookies变为登录态
-    activeCookiesUrl = ("https://apiff14risingstones.web.sdo.com/api/home/GHome/login?redirectUrl=https"
-                        "://ff14risingstones.web.sdo.com/pc/index.html&ticket=") + sdoLogin_ticket
-
-    activeCookies = requests.get(activeCookiesUrl, headers=headers)
-
-
-def rs_cookies_init():
+def rs_get_flowid():
     """
-    初始化石之家cookies：ff14risingstones
-    :return: dict cookies
+    get flowid for rising stones login
+    :return: flowid
     """
-<<<<<<< Updated upstream
-    # generate timestamp
-    rs_config = configparser.RawConfigParser()
-    rs_config.read('config.ini', encoding='UTF-8')
-
-    # 判断是否存在石之家cookie，若不存在就生成一个
-    if rs_config.get('RisingStones', 'rs_cookies') == "":
-        cookies_init_url = "https://apiff14risingstones.web.sdo.com/api/home/GHome/isLogin"
-        headers = {
-            "User-Agent": user_agent
-        }
-        cookies = requests.get(cookies_init_url, headers=headers).cookies
-        for rs_cookies_item in cookies:
-            if rs_cookies_item.name == 'ff14risingstones':
-                expires = rs_cookies_item.expires
-                rs_config.set('RisingStones', 'rs_cookies_expires', expires)
-        cookies = requests.utils.dict_from_cookiejar(cookies)
-        # sdo的神秘登录cookie拼接
-        domainhash = str(445385824)
-        randomid = round(899999999 * random.random() + 1E9)
-        initialtime = str(int(time.time()))
-        userinfo = f"userinfo=userid={domainhash}-{randomid}-{initialtime}&siteid=SDG-08132-01;"
-        ff14risingstones = "ff14risingstones=" + cookies['ff14risingstones'] + ";"
-        rs_config.set('RisingStones', 'rs_cookies', ff14risingstones + userinfo)
-        rs_config.write(open('config.ini', 'w', encoding='UTF-8'))
-        print("已写入初始石之家Cookie：", ff14risingstones + userinfo)
-
-    # 判断存在的cookie是否有效
-    if rs_config.get('RisingStones', 'rs_cookies') != "":
-        cookies = rs_config.get('RisingStones', 'rs_cookies')
-        if is_rs_login(cookies)['status']:
-            # 若cookie有效，则直接返回
-            return cookies
-        else:
-            # 若cookie尚未登录，则跳转sdoLogin统一登录后再使用
-            cookies = rs_cookies_login(cookies)
-            return cookies
-=======
     user_sessid = rs_config.get('Normal', 'daoyukey')
     device_id = rs_config.get('Normal', 'deviceid')
     manuid = rs_config.get('Normal', 'manuid')
     get_flowid_url = 'https://daoyu.sdo.com/api/thirdPartyAuth/initialize'
+    get_flowid_headers = {
+        **constant.RS_MIN_HEADERS
+    }
     get_flowid_params = {
         **constant.RS_PARAMS,
         'device_id': device_id,
@@ -170,7 +118,7 @@ def rs_cookies_init():
         'USERSESSID': user_sessid
     }
     get_flowid_response = requests.get(get_flowid_url, params=get_flowid_params, cookies=get_flowid_cookies,
-                                       verify=False, headers=constant.RS_MIN_HEADERS)
+                                       verify=False, headers=get_flowid_headers)
     try:
         flowid = get_flowid_response.json()['data']['flowId']
         if flowid != '':
@@ -182,25 +130,13 @@ def rs_cookies_init():
         if debug:
             print('KeyError: ' + str(e))
         return None
->>>>>>> Stashed changes
 
 
-def get_areaID(cookies, area_name):
+def rs_get_account_id_list(flowid):
     """
-    获取服务器区域ID
-    :return: int
+    query account id list
+    :return: return a account id list like {"accountId": "123456789","displayName": "Username"}
     """
-<<<<<<< Updated upstream
-    getAreaAndGroupListUrl = "https://apiff14risingstones.web.sdo.com/api/home/groupAndRole/getAreaAndGroupList"
-    headers = {
-        "User-Agent": user_agent,
-        "Cookie": cookies
-    }
-    areaAndGroupList = requests.get(getAreaAndGroupListUrl, headers=headers).json()["data"]
-    for area in areaAndGroupList:
-        if area["AreaName"] == area_name:
-            return area["AreaID"]
-=======
     user_sessid = rs_config.get('Normal', 'daoyukey')
     device_id = rs_config.get('Normal', 'deviceid')
     manuid = rs_config.get('Normal', 'manuid')
@@ -213,11 +149,14 @@ def get_areaID(cookies, area_name):
         'USERSESSID': user_sessid,
         'flowId': flowid
     }
+    get_account_id_header = {
+        **constant.RS_MIN_HEADERS
+    }
     get_account_id_list_cookies = {
         'USERSESSID': user_sessid,
     }
     get_account_id_list_response = requests.get(get_account_id_list_url, params=get_account_id_list_params,
-                                                headers=constant.RS_MIN_HEADERS,
+                                                headers=get_account_id_header,
                                                 cookies=get_account_id_list_cookies, verify=False)
     get_account_id_list_json = get_account_id_list_response.json()
     if get_account_id_list_json['return_message'] == 'success':
@@ -232,25 +171,23 @@ def get_areaID(cookies, area_name):
             print(get_account_id_list_json)
         logger_logs.error(f'Get accountList error，{get_account_id_list_json}。')
         return None
->>>>>>> Stashed changes
 
 
-def get_characterID(cookies, areaID, character_name):
+def rs_make_confirm(account_id, flowid):
     """
-    获取角色ID
-    :return: str
+    服务器鉴权
+    :param account_id: 从get_account_id_list中获取的真实用户ID
+    :param flowid: 浮动值
+    :return: 成功返回True 失败返回False
     """
-    getCharacterListUrl = f"https://apiff14risingstones.web.sdo.com/api/home/groupAndRole/getFF14Characters?AreaID={areaID}"
-    headers = {
-        "User-Agent": user_agent,
-        "Cookie": cookies
+    user_sessid = rs_config.get('Normal', 'daoyukey')
+    device_id = rs_config.get('Normal', 'deviceid')
+    manuid = rs_config.get('Normal', 'manuid')
+
+    make_confirm_url = 'https://daoyu.sdo.com/api/thirdPartyAuth/chooseAccount?'
+    make_confirm_header = {
+        **constant.RS_MIN_HEADERS
     }
-<<<<<<< Updated upstream
-    characterList = requests.get(getCharacterListUrl, headers=headers).json()["data"]
-    for character in characterList:
-        if character["character_name"] == character_name:
-            return str(character["character_id"])
-=======
     make_confirm_params = {
         **constant.RS_PARAMS,
         'device_id': device_id,
@@ -276,42 +213,21 @@ def get_characterID(cookies, areaID, character_name):
         logger_stream.info(f'与服务器鉴权中发生错误，请将Logs反馈给开发者')
         logger_logs.error(f'Confirm with server Failed ：{confirm_message}')
         return False
->>>>>>> Stashed changes
 
 
-def rs_character_bind(cookies):
+def rs_get_sub_account_key(flowid):
     """
-    绑定石之家角色
-    :return: dict cookies
+    获取子账号的DaoyuKey
+    :return: 成功返回子账号的DaoyuKey 例如 DYA-xxxxxxxxx 失败返回None
     """
-    rs_config = configparser.RawConfigParser()
-    rs_config.read('config.ini', encoding='UTF-8')
-    rs_character = rs_config.get('RisingStones', 'rs_character')
-    rs_area = rs_config.get('RisingStones', 'rs_area')
+    user_sessid = rs_config.get('Normal', 'daoyukey')
+    device_id = rs_config.get('Normal', 'deviceid')
+    manuid = rs_config.get('Normal', 'manuid')
 
-<<<<<<< Updated upstream
-    bindUrl = "https://apiff14risingstones.web.sdo.com/api/home/groupAndRole/bindCharacterInfo"
-    headers = {
-        "User-Agent": user_agent,
-        "Cookie": cookies
-    }
-    areaID = get_areaID(cookies, rs_area)
-    characterID = get_characterID(cookies, areaID, rs_character)
-    payload = {
-        "character_id": characterID,
-        "platform": 1,
-        "device_id": "IOS20230530",
-    }
-    bindResult = requests.post(bindUrl, headers=headers, data=payload)
-    return bindResult
-
-
-def login():
-    cookies = rs_cookies_init()
-    print("绑定结果：", rs_character_bind(cookies))
-    return cookies
-=======
     get_daoyu_ticket_url = 'https://daoyu.sdo.com/api/thirdPartyAuth/confirm?'
+    get_daoyu_ticket_header = {
+        **constant.RS_MIN_HEADERS
+    }
     get_daoyu_ticket_params = {
         **constant.RS_PARAMS,
         'device_id': device_id,
@@ -323,7 +239,7 @@ def login():
         'USERSESSID': user_sessid,
     }
     get_daoyu_ticket_response = requests.get(get_daoyu_ticket_url, params=get_daoyu_ticket_params,
-                                             headers=constant.RS_MIN_HEADERS, cookies=get_daoyu_ticket_cookies,
+                                             headers=get_daoyu_ticket_header, cookies=get_daoyu_ticket_cookies,
                                              verify=False)
     get_sub_account_key_json = get_daoyu_ticket_response.json()
     if get_sub_account_key_json['return_code'] == 0:
@@ -347,10 +263,13 @@ def rs_dao_login(sub_account_key, temp_cookies):
     dao_login_params = {
         'authorization': sub_account_key
     }
+    dao_login_headers = {
+        **constant.RS_HEADERS_GET
+    }
     dao_login_cookies = {
         'ff14risingstones': temp_cookies
     }
-    dao_login_response = requests.get(dao_login_url, headers=constant.RS_HEADERS_GET, params=dao_login_params,
+    dao_login_response = requests.get(dao_login_url, headers=dao_login_headers, params=dao_login_params,
                                       cookies=dao_login_cookies, verify=False)
     dao_login_json = dao_login_response.json()
     if dao_login_json['code'] == 10000:
@@ -413,4 +332,3 @@ def rs_bind(cookies, daoyu_ticket):
     if debug:
         print(f'Bind user account Success. {bind_cookies}')
     return bind_cookies
->>>>>>> Stashed changes
