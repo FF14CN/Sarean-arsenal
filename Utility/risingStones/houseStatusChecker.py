@@ -1,4 +1,6 @@
+
 import re
+
 
 def house_status_checker(user_info):
     """
@@ -19,18 +21,12 @@ def house_status_checker(user_info):
     else:
         houseStatus = {"house_status": "Unknown", "error": str(user_info)}
 
-
-    noc_enable = configparser.ConfigParser()
-    noc_enable.read('config.ini', encoding='UTF-8')
-    if noc_enable.getboolean('Notification', 'noc-enable'):
-        # PUSH
-        if houseStatus["house_status"] == "Warning":
-            pusher("石之家房屋状态提醒", "房屋剩余{}天".format(houseStatus["remain_day"]))
-        if houseStatus["house_status"] == "Unknown":
-            pusher("石之家房屋状态提醒", "房屋状态未知，具体错误信息：{}".format(houseStatus["error"]))
-        if houseStatus["house_status"] == "Normal":
-            pusher("石之家房屋状态提醒", "房屋正常")
-        return houseStatus
-    else:
-        print("通知已关闭,请自行处理返回信息！")
-    return houseStatus
+    if houseStatus["house_status"] == "Warning":
+        house_status_msg = "房屋剩余{}天".format(houseStatus["remain_day"])
+        return house_status_msg
+    if houseStatus["house_status"] == "Unknown":
+        house_status_msg = "房屋状态未知，具体错误信息：{}".format(houseStatus["error"])
+        return house_status_msg
+    if houseStatus["house_status"] == "Normal":
+        house_status_msg = "房屋状态正常"
+        return house_status_msg
