@@ -44,11 +44,11 @@ def daily_task():
                     # bind character
                     bind_cookies = rs_bind(login_cookies, daoyu_ticket)
                     # sign in
-                    sign_in_msg = rs_signin.rs_signin(bind_cookies,daoyu_ticket)
+                    sign_in_msg = rs_signin.rs_signin(bind_cookies, daoyu_ticket)
                     # Get Reward
-                    get_reward_msg = getSignReward.getReward(bind_cookies,daoyu_ticket)
+                    get_reward_msg = getSignReward.getReward(bind_cookies, daoyu_ticket)
                     # Get Userinfo
-                    user_info = getUserInfo.get_rs_userinfo(bind_cookies,daoyu_ticket)
+                    user_info = getUserInfo.get_rs_userinfo(bind_cookies, daoyu_ticket)
                     # Get HouseInfo
                     house_msg = house_status_checker(user_info)
                     if rs_login.debug:
@@ -58,6 +58,7 @@ def daily_task():
                     msg = f'{display_name}石之家任务结果, {sign_in_msg}, {get_reward_msg}, {house_msg}'
                     final_msg = msg + final_msg
                     rs_login.logger_stream.info(final_msg)
+                    final_msg = msg + final_msg
                     if rs_login.debug:
                         print(final_msg)
                     if index + 1 < len(account_id_list):
@@ -67,11 +68,13 @@ def daily_task():
                     final_msg = msg + final_msg
                     if index + 1 < len(account_id_list):
                         flowid = get_flowid()
+
             else:
                 msg = f'{display_name}与服务器鉴权失败，请检查config.ini是否正确配置'
                 final_msg = msg + final_msg
                 if index + 1 < len(account_id_list):
                     flowid = get_flowid()
+                final_msg = msg + final_msg
 
 
     else:
@@ -82,3 +85,4 @@ def daily_task():
 
 
 
+    return final_msg

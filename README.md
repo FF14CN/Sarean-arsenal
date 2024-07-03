@@ -28,7 +28,7 @@
 当你准备好了，请点击这里查看[详细教程](https://github.com/FF14CN/FF14AutoSign/wiki/SQMall-%E7%9B%9B%E8%B6%A3%E7%A7%AF%E5%88%86%E5%95%86%E5%9F%8E)
 
 ### 石之家模块
-使用叨鱼扫码登录实现的石之家相关工具，只需要配置您的角色数据并扫码登录，  
+基于叨鱼App运行的自动签到，支持接入青龙面板，需要你会手机抓包，  
 即可实现石之家自动签到、领取奖励、房屋过期预警的功能。  
 当你准备好了，请点击这里查看[详细教程](https://github.com/FF14CN/Sarean-arsenal/wiki/Risingstone-%E7%9F%B3%E4%B9%8B%E5%AE%B6)
 
