@@ -22,6 +22,7 @@ from Utility.risingStones.houseStatusChecker import house_status_checker as hous
 
 
 def daily_task():
+    global final_msg
     flowid = get_flowid()
     account_id_list = get_account_id_list(flowid)
     if account_id_list is not None:
@@ -39,33 +40,38 @@ def daily_task():
                     # bind character
                     bind_cookies = rs_bind(login_cookies, daoyu_ticket)
                     # sign in
-                    sign_in_msg = rs_signin.rs_signin(bind_cookies,daoyu_ticket)
+                    sign_in_msg = rs_signin.rs_signin(bind_cookies, daoyu_ticket)
                     # Get Reward
-                    get_reward_msg = getSignReward.getReward(bind_cookies,daoyu_ticket)
+                    get_reward_msg = getSignReward.getReward(bind_cookies, daoyu_ticket)
                     # Get Userinfo
-                    user_info = getUserInfo.get_rs_userinfo(bind_cookies,daoyu_ticket)
+                    user_info = getUserInfo.get_rs_userinfo(bind_cookies, daoyu_ticket)
                     # Get HouseInfo
                     house_msg = house_status_checker(user_info)
                     if rs_login.debug:
                         print(f'sign-msg：{sign_in_msg}')
                         print(f'get-reward-msg：{get_reward_msg}')
                         print(f'house-info-msg：{house_msg}')
-                    final_msg = f'石之家任务结果, {sign_in_msg}, {get_reward_msg}, {house_msg}'
+                    msg = f'石之家任务结果, {sign_in_msg}, {get_reward_msg}, {house_msg}'
                     rs_login.logger_stream.info(final_msg)
+                    final_msg = msg + final_msg
                     if rs_login.debug:
                         print(final_msg)
                     if index + 1 < len(account_id_list):
                         flowid = get_flowid()
                 else:
+                    msg = '登录石之家失败，请检查config.ini中配置的是否正确'
+                    final_msg = msg + final_msg
                     if index + 1 < len(account_id_list):
                         flowid = get_flowid()
+
             else:
+                msg = '与服务器鉴权失败，请检查config.ini中配置的是否正确'
                 if index + 1 < len(account_id_list):
                     flowid = get_flowid()
+                final_msg = msg + final_msg
 
 
     else:
-        print("拉取账号列表失败，请检查config.ini中的参数是否正确设置")
+        final_msg = "拉取账号列表失败，请检查config.ini中的参数是否正确设置"
 
-
-
+    return final_msg
