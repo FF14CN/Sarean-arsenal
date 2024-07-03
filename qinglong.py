@@ -7,7 +7,7 @@
 import configparser
 
 from Utility.sqMall import sqMallDoSign as sqMallSign
-from Utility.risingStones.dailytask import daily_task as lets_go
+from Utility.risingStones.dailyTask import daily_task as lets_go
 
 taskConfig = configparser.RawConfigParser()
 taskConfig.read('config.ini', encoding='utf-8')
@@ -19,11 +19,9 @@ if taskConfig.get('Modules', 'risingStonesTask') == 'True':
     noc_config.read('config.ini', encoding='utf-8')
     if noc_config.get('Notification', 'noc-enable') == 'True':
         import Utility.Notifications.push as pusher
-
         msg = lets_go()
         pusher.push('石之家任务结果', msg)
     else:
         import Utility.Notifications.push as pusher
-
         msg = lets_go()
         pusher.push('石之家任务结果', msg)
