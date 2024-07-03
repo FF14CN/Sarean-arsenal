@@ -82,7 +82,3 @@ def daily_task():
         final_msg = msg + final_msg
 
     return final_msg
-
-
-
-    return final_msg
