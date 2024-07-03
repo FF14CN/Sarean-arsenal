@@ -2,7 +2,7 @@
 import configparser
 
 from Utility.sqMall import sqMallDoSign as sqMallSign
-from Utility.risingStones.dailytask import daily_task as lets_go
+from Utility.risingStones.dailyTask import daily_task as lets_go
 
 taskConfig = configparser.RawConfigParser()
 taskConfig.read('config.ini', encoding='utf-8')
