@@ -243,10 +243,14 @@ def rs_get_sub_account_key(flowid):
                                              verify=False)
     get_sub_account_key_json = get_daoyu_ticket_response.json()
     if get_sub_account_key_json['return_code'] == 0:
-        sub_account_key = get_sub_account_key_json['data']['authorization']
-        if debug:
-            print(f'Get Sub_Account_Key Successful, User_sessionID：{sub_account_key}')
-        return sub_account_key
+        try:
+            sub_account_key = get_sub_account_key_json['data']['authorization']
+            if debug:
+                print(f'Get Sub_Account_Key Successful, User_sessionID：{sub_account_key}')
+            return sub_account_key
+        except KeyError:
+            logger_stream.info(f'该账号游戏内没有创建角色，跳过操作。')
+            return None
     else:
         logger_logs.error(f'Get Sub_Account_Key error，{get_sub_account_key_json}')
         logger_stream.info(f'获取叨鱼子账号票据失败，请将Logs反馈给开发者')
