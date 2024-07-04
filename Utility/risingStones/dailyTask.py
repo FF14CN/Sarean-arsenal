@@ -36,33 +36,34 @@ def daily_task():
             if make_confirm(account_id["accountId"], flowid):
                 cookies = get_temp_cookies()
                 sub_account_key = get_sub_account_key(flowid)
-                daoyu_ticket = dao_login(sub_account_key, cookies)
-                login_status, login_cookies = do_login(daoyu_ticket, cookies)
-                if rs_login.debug:
-                    print(login_cookies)
-                if login_status:
-                    # bind character
-                    bind_cookies = rs_bind(login_cookies, daoyu_ticket)
-                    # sign in
-                    sign_in_msg = rs_signin.rs_signin(bind_cookies, daoyu_ticket)
-                    # Get Reward
-                    get_reward_msg = getSignReward.getReward(bind_cookies, daoyu_ticket)
-                    # Get Userinfo
-                    user_info = getUserInfo.get_rs_userinfo(bind_cookies, daoyu_ticket)
-                    # Get HouseInfo
-                    house_msg = house_status_checker(user_info)
+                if sub_account_key is not None:
+                    daoyu_ticket = dao_login(sub_account_key, cookies)
+                    login_status, login_cookies = do_login(daoyu_ticket, cookies)
                     if rs_login.debug:
-                        print(f'sign-msg：{sign_in_msg}')
-                        print(f'get-reward-msg：{get_reward_msg}')
-                        print(f'house-info-msg：{house_msg}')
-                    msg = f'{display_name}石之家任务结果, {sign_in_msg}, {get_reward_msg}, {house_msg}'
-                    final_msg = msg + final_msg
-                    rs_login.logger_stream.info(final_msg)
-                    final_msg = msg + final_msg
-                    if rs_login.debug:
-                        print(final_msg)
-                    if index + 1 < len(account_id_list):
-                        flowid = get_flowid()
+                        print(login_cookies)
+                    if login_status:
+                        # bind character
+                        bind_cookies = rs_bind(login_cookies, daoyu_ticket)
+                        # sign in
+                        sign_in_msg = rs_signin.rs_signin(bind_cookies, daoyu_ticket)
+                        # Get Reward
+                        get_reward_msg = getSignReward.getReward(bind_cookies, daoyu_ticket)
+                        # Get Userinfo
+                        user_info = getUserInfo.get_rs_userinfo(bind_cookies, daoyu_ticket)
+                        # Get HouseInfo
+                        house_msg = house_status_checker(user_info)
+                        if rs_login.debug:
+                            print(f'sign-msg：{sign_in_msg}')
+                            print(f'get-reward-msg：{get_reward_msg}')
+                            print(f'house-info-msg：{house_msg}')
+                        msg = f'{display_name}石之家任务结果, {sign_in_msg}, {get_reward_msg}, {house_msg}'
+                        final_msg = msg + final_msg
+                        rs_login.logger_stream.info(final_msg)
+                        final_msg = msg + final_msg
+                        if rs_login.debug:
+                            print(final_msg)
+                        if index + 1 < len(account_id_list):
+                            flowid = get_flowid()
                 else:
                     msg = f'{display_name}登录石之家失败，可能的原因是没有在手机端绑定游戏内角色。'
                     final_msg = msg + final_msg
@@ -76,13 +77,8 @@ def daily_task():
                     flowid = get_flowid()
                 final_msg = msg + final_msg
 
-
     else:
         msg = '拉取账号列表失败，请检查config.ini中的参数是否正确设置'
         final_msg = msg + final_msg
-
-    return final_msg
-
-
 
     return final_msg
