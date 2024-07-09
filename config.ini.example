@@ -16,10 +16,17 @@ showusername =
 [Notification]
 ;若要启用消息通知，请将noc-enable设置为True,并根据说明正确配置push-key
 noc-enable = False
-;通知服务商可选：bark、pushdeer serverchan smtp
+;通知服务商可选：bark、pushdeer serverchan smtp qmsg
 push-method = bark
 ;推送密钥或目标地址
 push-key = xxxxx
+
+;qmsg酱推送设置
+;推送目标 normal=私聊  group=群聊
+qmsg-target = normal
+;推送目标QQ号/群号，留空默认全发
+qmsg-target-number =
+
 
 ;SMTP 发件服务器配置
 ;目前仅支持SSL 465端口发送
