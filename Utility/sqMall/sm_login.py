@@ -2,15 +2,18 @@
 Author: KuliPoi
 Contact: me@pipirapira.com
 Created: 2023-12-20
-File: Daoyu.py
+File: sm_login.py
 Version: 2.5.0
 Description: DAOYU LOGIN, FUCK SQ BY WAY
 """
 import logging
+import random
 import urllib3
 import requests
 import configparser
 import os
+import uuid
+import string
 from kuai_log import get_logger
 import re
 
@@ -33,8 +36,8 @@ def config_handler():
     """
     config = configparser.ConfigParser()
     config.read('config.ini', encoding='utf-8')
-    device_id = config.get('Normal', 'DeviceID')
-    manuid = config.get('Normal', 'ManuID')
+    device_id = '-'.join(str(uuid.uuid4()).upper() for _ in range(5))
+    manuid = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
     daoyu_key = config.get('Normal', 'DaoyuKey')
     show_username = config.get('Normal', 'ShowUsername')
     return device_id, manuid, daoyu_key, show_username
