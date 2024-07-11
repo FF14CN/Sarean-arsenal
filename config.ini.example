@@ -4,10 +4,6 @@ risingStonesTask = True
 sqMallTask = True
 
 [Normal]
-;设备ID，关键参数
-deviceid =
-;设备型号，关键参数
-manuid =
 ;叨鱼Key，关键参数
 daoyukey =
 ;show_Username 关键参数
