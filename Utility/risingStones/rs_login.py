@@ -10,7 +10,9 @@ Description: daoyu login into rising stones (Fuck SQ by the way)
 import configparser
 import logging
 import sys
-
+import string
+import random
+import uuid
 import requests
 import urllib3
 from kuai_log import get_logger
@@ -102,8 +104,8 @@ def rs_get_flowid():
     :return: flowid
     """
     user_sessid = rs_config.get('Normal', 'daoyukey')
-    device_id = rs_config.get('Normal', 'deviceid')
-    manuid = rs_config.get('Normal', 'manuid')
+    device_id = '-'.join(str(uuid.uuid4()).upper() for _ in range(5))
+    manuid = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
     get_flowid_url = 'https://daoyu.sdo.com/api/thirdPartyAuth/initialize'
     get_flowid_headers = {
         **constant.RS_MIN_HEADERS
@@ -138,8 +140,8 @@ def rs_get_account_id_list(flowid):
     :return: return a account id list like {"accountId": "123456789","displayName": "Username"}
     """
     user_sessid = rs_config.get('Normal', 'daoyukey')
-    device_id = rs_config.get('Normal', 'deviceid')
-    manuid = rs_config.get('Normal', 'manuid')
+    device_id = '-'.join(str(uuid.uuid4()).upper() for _ in range(5))
+    manuid = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
     get_account_id_list_url = 'https://daoyu.sdo.com/api/thirdPartyAuth/queryAccountList'
     get_account_id_list_params = {
@@ -181,8 +183,8 @@ def rs_make_confirm(account_id, flowid):
     :return: 成功返回True 失败返回False
     """
     user_sessid = rs_config.get('Normal', 'daoyukey')
-    device_id = rs_config.get('Normal', 'deviceid')
-    manuid = rs_config.get('Normal', 'manuid')
+    device_id = '-'.join(str(uuid.uuid4()).upper() for _ in range(5))
+    manuid = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
     make_confirm_url = 'https://daoyu.sdo.com/api/thirdPartyAuth/chooseAccount?'
     make_confirm_header = {
@@ -221,8 +223,8 @@ def rs_get_sub_account_key(flowid):
     :return: 成功返回子账号的DaoyuKey 例如 DYA-xxxxxxxxx 失败返回None
     """
     user_sessid = rs_config.get('Normal', 'daoyukey')
-    device_id = rs_config.get('Normal', 'deviceid')
-    manuid = rs_config.get('Normal', 'manuid')
+    device_id = '-'.join(str(uuid.uuid4()).upper() for _ in range(5))
+    manuid = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
     get_daoyu_ticket_url = 'https://daoyu.sdo.com/api/thirdPartyAuth/confirm?'
     get_daoyu_ticket_header = {
