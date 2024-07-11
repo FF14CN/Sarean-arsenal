@@ -64,6 +64,9 @@ def daily_task():
                             print(final_msg)
                         if index + 1 < len(account_id_list):
                             flowid = get_flowid()
+                    else:
+                        if index + 1 < len(account_id_list):
+                            flowid = get_flowid()
                 else:
                     msg = f'{display_name}登录石之家失败，可能的原因是没有在手机端绑定游戏内角色。'
                     final_msg = msg + final_msg
