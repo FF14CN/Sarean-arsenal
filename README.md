@@ -20,22 +20,21 @@
 1. 下载[Releases](https://github.com/FF14CN/Sarean-arsenal/releases/latest)中最新发布的源码
 2. 进入项目根目录
 3. 安装依赖库 ```pip -r requirements.txt```
-4. 然后根据自己的需求修改``` config.ini ```，每个模块都有对应的教程
+4. 然后根据自己的需求修改``` config.ini ```，每个模块都有对应的教程，如果您对Config的内容有任何疑问请查阅```config.ini.example```
 5. 运行本项目 python .\run.py，如需使用青龙面板请使用 ```qinglong.py```
 
 ### 盛趣积分商城签到模块
-基于叨鱼App运行的自动签到，支持接入青龙面板，需要你会手机抓包，  
-当你准备好了，请点击这里查看[详细教程](https://github.com/FF14CN/FF14AutoSign/wiki/SQMall-%E7%9B%9B%E8%B6%A3%E7%A7%AF%E5%88%86%E5%95%86%E5%9F%8E)
+可以实现盛趣商城的多账户签到  
+当你准备好了，请点击这里查看[详细教程](https://github.com/FF14CN/Sarean-arsenal/wiki/%5B%E6%9C%80%E6%96%B0%5D-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B)
 
-### 石之家模块
-基于叨鱼App运行的自动签到，支持接入青龙面板，需要你会手机抓包，  
-即可实现石之家自动签到、领取奖励、房屋过期预警的功能。  
-当你准备好了，请点击这里查看[详细教程](https://github.com/FF14CN/Sarean-arsenal/wiki/Risingstone-%E7%9F%B3%E4%B9%8B%E5%AE%B6)
+### 石之家模块  
+即可实现石之家多账户自动签到、领取奖励、房屋过期预警的功能。  
+当你准备好了，请点击这里查看[详细教程](https://github.com/FF14CN/Sarean-arsenal/wiki/%5B%E6%9C%80%E6%96%B0%5D-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B)
 
 ## Other
 项目开发计划与进度请移步至 [Dev Status](https://github.com/orgs/FF14CN/projects/1)  
 详细视频教程请观看 [B站视频](https://www.bilibili.com/video/BV1Gg4y1k7dr)  
-IOS详细叨鱼抓包教程 [B站视频](https://www.bilibili.com/video/BV1Ka4y1z71c)  
+[已过期]IOS详细叨鱼抓包教程 [B站视频](https://www.bilibili.com/video/BV1Ka4y1z71c)  
 ## License
 
 [With AGPL V3](https://github.com/FF14CN/FF14AutoSign/blob/main/LICENSE)
