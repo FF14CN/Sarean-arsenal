@@ -39,7 +39,7 @@ def main():
                     sub_account_session = sm_login.get_sub_account_session(sub_account_key, temp_account_sessionid)
                     sign_msg = daoyumall_sign(sub_account_session, account_id["accountId"])
                     if sign_msg == 0:
-                        Daoyu.logger_stream.info(
+                        sm_login.logger_stream.info(
                             f'账号{account_id["displayName"]}签到成功，当前积分余额{daoyu_mall_balance(sub_account_session)}')
                         sub_msg = f'账号{account_id["displayName"]}签到成功，当前积分余额{daoyu_mall_balance(sub_account_session)},'
                         results.append(sub_msg)

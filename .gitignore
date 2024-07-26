@@ -6,3 +6,4 @@ Temp/
 *.pyc
 *.zip
 *.log
+config.ini

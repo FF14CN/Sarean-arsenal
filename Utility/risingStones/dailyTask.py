@@ -21,10 +21,7 @@ from Utility.risingStones.rs_login import rs_bind as rs_bind
 from Utility.risingStones.houseStatusChecker import house_status_checker as house_status_checker
 
 
-
-
 def daily_task():
-
     final_msg = ''
     flowid = get_flowid()
     account_id_list = get_account_id_list(flowid)
@@ -45,6 +42,7 @@ def daily_task():
                         # bind character
                         bind_cookies = rs_bind(login_cookies, daoyu_ticket)
                         # sign in
+                        bind_cookies = f'ff14risingstones={bind_cookies}'
                         sign_in_msg = rs_signin.rs_signin(bind_cookies, daoyu_ticket)
                         # Get Reward
                         get_reward_msg = getSignReward.getReward(bind_cookies, daoyu_ticket)

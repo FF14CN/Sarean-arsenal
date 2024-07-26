@@ -6,7 +6,7 @@ Update Date: 2024-06-27
 import requests
 from Utility.risingStones import rs_login
 from Utility.risingStones import constant
-
+import httpx
 
 def rs_signin(cookies,daoyu_ticket):
     """
@@ -17,11 +17,13 @@ def rs_signin(cookies,daoyu_ticket):
     """
     signinApi = "https://apiff14risingstones.web.sdo.com/api/home/sign/signIn"
     headers = {
-        **constant.RS_HEADERS_POST,
+        **constant.RS_HEADERS_POST_TEST,
         'authorization': daoyu_ticket,
-        "Cookie": cookies
+        # "Cookie":  cookies
     }
-    signinResult = requests.post(url=signinApi, headers=headers)
+    with httpx.Client(http2=True) as client:
+        signinResult = client.post(signinApi, headers=headers)
+
     signinResult = signinResult.json()
     if signinResult["code"] == 10000:
         if rs_login.debug:
