@@ -27,10 +27,10 @@
 
 ### 盛趣积分商城签到模块
 可以实现盛趣商城的多账户签到  
-当你准备好了，请点击这里查看[详细教程](https://github.com/FF14CN/Sarean-arsenal/wiki/%5B%E6%9C%80%E6%96%B0%5D-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B)
 
 ### 石之家模块  
 即可实现石之家多账户自动签到、领取奖励、房屋过期预警的功能。  
+
 当你准备好了，请点击这里查看[详细教程](https://github.com/FF14CN/Sarean-arsenal/wiki/%5B%E6%9C%80%E6%96%B0%5D-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B)
 
 ## Other
