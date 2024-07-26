@@ -14,6 +14,7 @@ import string
 import random
 import uuid
 import requests
+import httpx
 import urllib3
 from kuai_log import get_logger
 from Utility.risingStones import constant
@@ -85,7 +86,8 @@ def rs_get_temp_cookies():
     headers = {
         **constant.RS_HEADERS_GET
     }
-    get_tp_cookies_response = requests.get(tp_cookies_url, headers=headers, verify=False)
+    with httpx.Client(http2=True) as client:
+        get_tp_cookies_response = client.get(tp_cookies_url, headers=headers)
     tp_cookies = get_tp_cookies_response.cookies.get('ff14risingstones')
     if tp_cookies != '':
         if debug:
@@ -119,8 +121,9 @@ def rs_get_flowid():
     get_flowid_cookies = {
         'USERSESSID': user_sessid
     }
-    get_flowid_response = requests.get(get_flowid_url, params=get_flowid_params, cookies=get_flowid_cookies,
-                                       verify=False, headers=get_flowid_headers)
+    with httpx.Client(http2=True) as client:
+        get_flowid_response = client.get(get_flowid_url, params=get_flowid_params, cookies=get_flowid_cookies,
+                                         headers=get_flowid_headers)
     try:
         flowid = get_flowid_response.json()['data']['flowId']
         if flowid != '':
@@ -157,9 +160,10 @@ def rs_get_account_id_list(flowid):
     get_account_id_list_cookies = {
         'USERSESSID': user_sessid,
     }
-    get_account_id_list_response = requests.get(get_account_id_list_url, params=get_account_id_list_params,
-                                                headers=get_account_id_header,
-                                                cookies=get_account_id_list_cookies, verify=False)
+    with httpx.Client(http2=True) as client:
+        get_account_id_list_response = client.get(get_account_id_list_url, params=get_account_id_list_params,
+                                                  headers=get_account_id_header,
+                                                  cookies=get_account_id_list_cookies)
     get_account_id_list_json = get_account_id_list_response.json()
     if get_account_id_list_json['return_message'] == 'success':
         account_id_list = get_account_id_list_json['data']['accountList']
@@ -201,8 +205,9 @@ def rs_make_confirm(account_id, flowid):
     make_confirm_cookies = {
         'USERSESSID': user_sessid,
     }
-    make_confirm_response = requests.get(make_confirm_url, params=make_confirm_params,
-                                         headers=make_confirm_header, cookies=make_confirm_cookies, verify=False)
+    with httpx.Client(http2=True) as client:
+        make_confirm_response = client.get(make_confirm_url, params=make_confirm_params,
+                                           headers=make_confirm_header, cookies=make_confirm_cookies)
     make_confirm_json = make_confirm_response.json()
     confirm_message = make_confirm_json['return_message']
     if confirm_message == 'success':
@@ -240,9 +245,9 @@ def rs_get_sub_account_key(flowid):
     get_daoyu_ticket_cookies = {
         'USERSESSID': user_sessid,
     }
-    get_daoyu_ticket_response = requests.get(get_daoyu_ticket_url, params=get_daoyu_ticket_params,
-                                             headers=get_daoyu_ticket_header, cookies=get_daoyu_ticket_cookies,
-                                             verify=False)
+    with httpx.Client(http2=True) as client:
+        get_daoyu_ticket_response = client.get(get_daoyu_ticket_url, params=get_daoyu_ticket_params,
+                                               headers=get_daoyu_ticket_header, cookies=get_daoyu_ticket_cookies)
     get_sub_account_key_json = get_daoyu_ticket_response.json()
     if get_sub_account_key_json['return_code'] == 0:
         try:
@@ -275,8 +280,9 @@ def rs_dao_login(sub_account_key, temp_cookies):
     dao_login_cookies = {
         'ff14risingstones': temp_cookies
     }
-    dao_login_response = requests.get(dao_login_url, headers=dao_login_headers, params=dao_login_params,
-                                      cookies=dao_login_cookies, verify=False)
+    with httpx.Client(http2=True) as client:
+        dao_login_response = client.get(dao_login_url, headers=dao_login_headers, params=dao_login_params,
+                                        cookies=dao_login_cookies)
     dao_login_json = dao_login_response.json()
     if dao_login_json['code'] == 10000:
         daoyu_token = dao_login_json['data']['DaoyuToken']
@@ -298,7 +304,8 @@ def rs_do_login(daoyu_ticket, temp_cookies):
     rs_login_cookies = {
         'ff14risingstones': temp_cookies
     }
-    rs_login_response = requests.get(rs_login_url, headers=rs_login_headers, cookies=rs_login_cookies, verify=False)
+    with httpx.Client(http2=True) as client:
+        rs_login_response = client.get(rs_login_url, headers=rs_login_headers, cookies=rs_login_cookies)
     rs_login_json = rs_login_response.json()
     if rs_login_json['code'] == 10000:
         if debug:
@@ -333,7 +340,8 @@ def rs_bind(cookies, daoyu_ticket):
     bind_cookies = {
         'ff14risingstones': cookies
     }
-    bind_response = requests.get(bind_url, headers=bind_headers, cookies=bind_cookies, verify=False)
+    with httpx.Client(http2=True) as client:
+        bind_response = client.get(bind_url, headers=bind_headers, cookies=bind_cookies)
     bind_cookies = bind_response.cookies.get('ff14risingstones')
     if debug:
         print(f'Bind user account Success. {bind_cookies}')
