@@ -2,7 +2,7 @@ from datetime import datetime
 import time
 from Utility.risingStones import rs_login
 from Utility.risingStones import constant
-
+import httpx
 import requests
 
 
@@ -20,9 +20,11 @@ def getRewardStatus(cookies, daoyu_ticket):
     status_cookies = {
         'ff14risingstones': cookies
     }
-    rewardStatus = requests.get(url=RewardStatusurl, headers=headers, cookies=status_cookies).json()
+    with httpx.Client(http2=True) as client:
+        rewardStatus = client.get(RewardStatusurl, headers=headers, cookies=status_cookies).json()
     signLogUrl = "https://apiff14risingstones.web.sdo.com/api/home/sign/mySignLog?month={}".format(currentTime)
-    signLogCount = requests.get(url=signLogUrl, headers=headers, cookies=status_cookies).json()["data"]["count"]
+    with httpx.Client(http2=True) as client:
+        signLogCount = client.get(signLogUrl, headers=headers, cookies=status_cookies).json()["data"]["count"]
     if rewardStatus["code"] == 10000:
         return {
             "status": "success",
@@ -56,7 +58,8 @@ def getSignIDReward(cookies, rewardId, rewardMonth, daoyu_ticket):
     get_signid_reward_cookies = {
         'ff14risingstones': cookies
     }
-    getReward = requests.post(url=getRewardUrl, headers=headers, data=payload, cookies=get_signid_reward_cookies).json()
+    with httpx.Client(http2=True) as client:
+        getReward = client.post(getRewardUrl, headers=headers, data=payload, cookies=get_signid_reward_cookies).json()
     if getReward["code"] == 10000:
         return {
             "status": "success",

@@ -33,24 +33,29 @@ RS_HEADERS_GET = {
     'accept-language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7'
 }
 
+RS_HEADERS_POST_TEST = {
+    'user-agent': 'Mozilla/5.0 (Linux; Android 12; V2218A Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.114 Mobile Safari/537.36 DaoYu/9.4.14',
+    'Host': 'apiff14risingstones.web.sdo.com'
+}
+
 RS_HEADERS_POST = {
-        'authority': 'apiff14risingstones.web.sdo.com',
-        'method': 'POST',
-        'scheme': 'https',
-        'content-length': '0',
-        'pragma': 'no-cache',
-        'cache-control': 'no-cache',
-        'accept': 'application/json, text/plain, */*',
-        'user-agent': 'Mozilla/5.0 (Linux; Android 12; V2218A Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.114 Mobile Safari/537.36 DaoYu/9.4.14',
-        'origin': 'https://ff14risingstones.web.sdo.com',
-        'x-requested-with': 'com.sdo.sdaccountkey',
-        'sec-fetch-site': 'same-site',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-dest': 'empty',
-        'referer': 'https://ff14risingstones.web.sdo.com/',
-        'accept-encoding': 'gzip, deflate',
-        'accept-language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7'
-    }
+    'authority': 'apiff14risingstones.web.sdo.com',
+    'method': 'POST',
+    'scheme': 'https',
+    'content-length': '0',
+    'pragma': 'no-cache',
+    'cache-control': 'no-cache',
+    'accept': 'application/json, text/plain, */*',
+    'user-agent': 'Mozilla/5.0 (Linux; Android 12; UI12c Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.114 Mobile Safari/537.36 DaoYu/9.4.14',
+    'origin': 'https://ff14risingstones.web.sdo.com',
+    'x-requested-with': 'com.sdo.sdaccountkey',
+    'sec-fetch-site': 'same-site',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-dest': 'empty',
+    'referer': 'https://ff14risingstones.web.sdo.com/',
+    'accept-encoding': 'gzip, deflate',
+    'accept-language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7'
+}
 
 RS_PARAMS = {
     'src_code': '4',

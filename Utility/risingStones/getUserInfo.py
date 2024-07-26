@@ -1,4 +1,5 @@
 import requests
+import httpx
 from Utility.risingStones import constant
 
 
@@ -16,7 +17,8 @@ def get_rs_userinfo(cookies, daoyu_ticket):
     get_userinfo_cookies = {
         'ff14risingstones': cookies
     }
-    userInfoResult = requests.get(url=userInfoApi, headers=headers, cookies=get_userinfo_cookies)
+    with httpx.Client(http2=True) as client:
+        userInfoResult = client.get(userInfoApi, headers=headers, cookies=get_userinfo_cookies)
     userInfoResult = userInfoResult.json()
     if userInfoResult["code"] == 10000:
         return {
