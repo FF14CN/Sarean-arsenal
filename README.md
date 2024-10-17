@@ -17,6 +17,7 @@
 在任何情况下都不要泄露自己的**UserSessionID**给其他人
 
 **🥳 2.1.4 版本之后 抓包已经无需依赖手机叨鱼APP 让我们欢呼 让我们庆祝 顺便感谢盛趣已经破碎的社区梦**
+**😋 2.1.5 版本之后 进入稳定期 如果没有需要修复的内容将大幅度降低更新频率 如果发现问题请前往issues反馈**
 
 ### 使用教程
 1. 下载[Releases](https://github.com/FF14CN/Sarean-arsenal/releases/latest)中最新发布的源码
