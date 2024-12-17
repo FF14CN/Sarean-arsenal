@@ -21,7 +21,7 @@
 
 ### 使用教程
 1. 下载[Releases](https://github.com/FF14CN/Sarean-arsenal/releases/latest)中最新发布的源码
-2. 进入项目根目录 **目前仅支持 Python 3.11 环境 **
+2. 进入项目根目录 **目前仅支持 Python 3.11 环境**
 3. 安装依赖库 ```pip -r requirements.txt```
 4. 然后根据自己的需求修改``` config.ini ```，每个模块都有对应的教程，如果您对Config的内容有任何疑问请查阅```config.ini.example```
 5. 运行本项目 python .\run.py，如需使用青龙面板请使用 ```qinglong.py```
