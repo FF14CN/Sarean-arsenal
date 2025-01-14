@@ -12,7 +12,7 @@ showusername =
 [Notification]
 ;若要启用消息通知，请将noc-enable设置为True,并根据说明正确配置push-key
 noc-enable = False
-;通知服务商可选：bark、pushdeer serverchan smtp qmsg
+;通知服务商可选：bark pushdeer serverchan smtp qmsg telegram
 push-method = bark
 ;推送密钥或目标地址
 push-key = xxxxx
@@ -33,3 +33,8 @@ smtp-username = ""
 smtp-password = ""
 smtp-ssl = True
 
+;Telegram推送设置
+;Telegram机器人的token，例如：1077xxx4424:AAFjv0FcqxxxxxxgEMGfi22B4yh15R5uw
+tg-token = botxxxxx
+;Telegram用户的id，例如：129xxx206
+tg-user = xxxxx
